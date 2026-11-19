@@ -20,6 +20,11 @@ app.use('/api/v1/admin', adminRoutes);
 app.use('/api/v1', authRoutes);
 const PORT = process.env.PORT || 8005;
 
+console.log(
+  "MongoDB URI configured:",
+  Boolean(process.env.MONGODB_URL)
+);
+
 // Start the server
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server is running on port ${PORT} and accessible on all interfaces`);
