@@ -21,7 +21,7 @@ app.use('/api/v1', authRoutes);
 const PORT = process.env.PORT || 8005;
 
 console.log(
-  "MongoDB URI configured:",
+  "MongoDB URL configured:",
   Boolean(process.env.MONGODB_URL)
 );
 

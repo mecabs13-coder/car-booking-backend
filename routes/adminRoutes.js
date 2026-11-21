@@ -36,8 +36,9 @@ router.get('/drivers/:id/edit', DriverController.getDriverById);
 // router.put('/drivers/:id/update', twoUploads('drivers'), DriverController.updateDriver);
 router.put('/drivers/:id/update', twoUploads('drivers', { image: 1, documentImage: 1 }), DriverController.updateDriver);
 router.delete('/drivers/:id/delete', DriverController.deleteDriver);
-router.delete('/drivers/:id/status', DriverController.updateDriverStatus);
-router.delete('/drivers/:id/password', DriverController.updateDriverStatus);
+// router.delete('/drivers/:id/status', DriverController.updateDriverStatus);
+router.patch('/drivers/:id/status', DriverController.updateDriverStatus);
+// router.delete('/drivers/:id/password', DriverController.updateDriverStatus);
 router.get('/drivers/available/get', DriverController.getAvailableDrivers);
 
 
@@ -83,6 +84,7 @@ router.get('/booking/:id/edit', BookingController.getBookingById);
 router.post('/booking', BookingController.createBooking);
 router.put('/booking/:id/update', BookingController.updateBooking);
 router.patch('/booking/:id/cancel', BookingController.cancelBooking);
+router.patch('/booking/:id/complete', BookingController.completeJourney);
 router.delete('/booking/:id/delete', BookingController.deleteBooking);
 
 // Car Details Routes
