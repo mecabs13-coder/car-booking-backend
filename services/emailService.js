@@ -25,7 +25,7 @@ const SendEmail = async (emailTemplate, data) => {
 
     const result = await transporter.sendMail(mailOptions);
 
-    console.log("OTP email sent:", result.messageId);
+    // console.log("OTP email sent:", result.messageId);
 
     return result;
   } catch (error) {

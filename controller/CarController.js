@@ -683,6 +683,7 @@ const CarController = {
       const carQuery = {
         isActive: true,
         isDeleted: false,
+        // isDeleted: { $ne: true },
       };
 
       if (company) {

@@ -15,7 +15,7 @@ const sendResetOtpEmail = async (user, otp) => {
   await SendEmail(OtpSendEmailContent, EmailData);
 };
 
-const userController = {
+const UserController = {
   TestAPI: async (req, res) => {
     try {
       const users = await User.find().select("name");
@@ -316,6 +316,75 @@ const userController = {
       });
     }
   },
+
+  // profile
+  getProfile: async (req, res) => {
+    try {
+      const user = await User.findById(req.userId).select("email");
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      res.json(user);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
+  updateProfile: async (req, res) => {
+    try {
+      const { email } = req.body;
+
+      if (!email || !email.trim()) {
+        return res.status(400).json({
+          success: false,
+          message: "Email is required",
+        });
+      }
+
+      const normalizedEmail = email.trim().toLowerCase();
+
+      // Check whether another user already uses this email
+      const existingUser = await User.findOne({
+        email: normalizedEmail,
+        _id: { $ne: req.userId },
+      });
+
+      if (existingUser) {
+        return res.status(409).json({
+          success: false,
+          message: "This email is already registered",
+        });
+      }
+
+      const user = await User.findByIdAndUpdate(
+        req.userId,
+        { $set: { email: normalizedEmail } },
+        { new: true, runValidators: true },
+      ).select("email");
+
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: "User not found",
+        });
+      }
+
+      res.json({
+        success: true,
+        message: "Email updated successfully",
+        user,
+      });
+    } catch (error) {
+      console.error("Profile update error:", error);
+
+      res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  },
 };
 
-module.exports = userController;
+module.exports = UserController;

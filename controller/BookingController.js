@@ -49,7 +49,7 @@ const BookingController = {
         carId,
         customerId,
         driverId: car.driverId,
-        driverId,
+        // driverId,
         fromLocation,
         toLocation,
         fromDate,
